@@ -1,0 +1,29 @@
+<div class="home-container">
+  <header class="header">
+    <h1>Kanban Board</h1>
+    <div class="user-info">
+      @if (authService.currentUser()) {
+        <span class="username">{{ authService.currentUser()?.email }}</span>
+        <button class="btn-logout" (click)="logout()">Logout</button>
+      }
+    </div>
+  </header>
+
+  <main class="content">
+    <div class="welcome-message">
+      <h2>Welcome, {{ authService.currentUser()?.name }}! 👋</h2>
+    </div>
+
+    <div class="project-list">
+        
+        <ng-template *ngIf="projectList.length > 0; else noProjects">
+            <div class="project-item" *ngFor="let project of projectList">
+                <h3>{{ project.name }}</h3>
+                <p>{{ project.description }}</p>
+            </div>
+        </ng-template>
+        <ng-template #noProjects>
+            <p>You have no projects yet. Create one to get started!</p>
+        </ng-template>
+    </div>
+  </main>
