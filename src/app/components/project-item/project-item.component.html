@@ -1,0 +1,9 @@
+<div class="project-item" (click)="onProjectClick()">
+  <div class="project-header">
+    <h3 class="project-title">{{ project.name }}</h3>
+  </div>
+
+  @if (project.description) {
+    <p class="project-description">{{ project.description }}</p>
+  }
+</div>
