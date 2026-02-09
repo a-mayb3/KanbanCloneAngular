@@ -1,23 +1,30 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgIf, NgFor } from '@angular/common';
+import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-
+import { ProjectItemComponent } from '../../components/project-item/project-item.component';
 import { Project } from '../../models/projects.models';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, NgIf, NgFor],
+  imports: [CommonModule, ProjectItemComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
   protected authService = inject(AuthService);
+  private router = inject(Router);
 
-  protected projectList : Project[] = this.authService.currentUser()?.projects || [];
+  protected get projectList(): Project[] {
+    return this.authService.currentUser()?.projects ?? [];
+  }
 
-  logout() {
-    this.authService.logout().subscribe();
+  onProjectClick(project: Project) {
+    this.router.navigate(['/projects', project.id]);
+  }
+
+  onCreateProject() {
+    this.router.navigate(['/projects/new']);
   }
 }

@@ -1,29 +1,27 @@
 <div class="home-container">
-  <header class="header">
-    <h1>Kanban Board</h1>
-    <div class="user-info">
-      @if (authService.currentUser()) {
-        <span class="username">{{ authService.currentUser()?.email }}</span>
-        <button class="btn-logout" (click)="logout()">Logout</button>
-      }
-    </div>
-  </header>
-
   <main class="content">
     <div class="welcome-message">
-      <h2>Welcome, {{ authService.currentUser()?.name }}! 👋</h2>
+      <div class="welcome-header">
+        <h2>Welcome, {{ authService.currentUser()?.name }}! 👋</h2>
+        <button class="btn-create" (click)="onCreateProject()">Create project</button>
+      </div>
     </div>
 
-    <div class="project-list">
-        
-        <ng-template *ngIf="projectList.length > 0; else noProjects">
-            <div class="project-item" *ngFor="let project of projectList">
-                <h3>{{ project.name }}</h3>
-                <p>{{ project.description }}</p>
-            </div>
-        </ng-template>
-        <ng-template #noProjects>
-            <p>You have no projects yet. Create one to get started!</p>
-        </ng-template>
+    <div class="projects-grid">
+      @if (projectList.length > 0) {
+        @for (project of projectList; track project.id) {
+          <app-project-item [project]="project" (projectClick)="onProjectClick($event)" />
+        }
+      } @else {
+        <div class="no-projects">
+          <p>
+            You have no projects.
+            <a class="create-link" href="#" (click)="onCreateProject(); $event.preventDefault()">
+              Create one now
+            </a>
+          </p>
+        </div>
+      }
     </div>
   </main>
+</div>

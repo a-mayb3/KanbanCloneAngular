@@ -3,48 +3,6 @@
   background-color: #f5f7fa;
 }
 
-.header {
-  background: white;
-  padding: 20px 40px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.header h1 {
-  margin: 0;
-  font-size: 24px;
-  color: #667eea;
-  font-weight: 700;
-}
-
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.username {
-  font-weight: 500;
-  color: #333;
-}
-
-.btn-logout {
-  padding: 8px 20px;
-  background-color: #667eea;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: background-color 0.3s;
-}
-
-.btn-logout:hover {
-  background-color: #5568d3;
-}
-
 .content {
   padding: 40px;
   max-width: 1400px;
@@ -57,16 +15,92 @@
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
+  margin-bottom: 30px;
+}
+
+.welcome-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 .welcome-message h2 {
-  margin: 0 0 15px 0;
+  margin: 0 0 10px 0;
   color: #333;
   font-size: 28px;
+}
+
+.btn-create {
+  padding: 10px 18px;
+  background-color: #10b981;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-create:hover {
+  background-color: #059669;
 }
 
 .welcome-message p {
   margin: 0;
   color: #666;
   font-size: 16px;
+}
+
+/* Projects List */
+.projects-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.loading,
+.error-state {
+  background: white;
+  padding: 30px 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.error-state p {
+  color: #c0392b;
+  margin: 0;
+}
+
+.loading p {
+  color: #666;
+  margin: 0;
+}
+
+.no-projects {
+  background: white;
+  padding: 60px 40px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.no-projects p {
+  margin: 0;
+  color: #95a5a6;
+  font-size: 16px;
+}
+
+.create-link {
+  color: #10b981;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.create-link:hover {
+  color: #059669;
 }
