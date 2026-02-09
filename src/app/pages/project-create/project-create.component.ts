@@ -10,7 +10,7 @@ import { CreateProjectRequest, Project } from '../../models/projects.models';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './project-create.component.html',
-  styleUrl: './project-create.component.css'
+  styleUrl: './project-create.component.css',
 })
 export class ProjectCreateComponent {
   private apiService = inject(ApiService);
@@ -27,9 +27,14 @@ export class ProjectCreateComponent {
       return;
     }
 
+    if (!this.description.trim()) {
+      this.errorMessage.set('Project description is required.');
+      return;
+    }
+
     const payload: CreateProjectRequest = {
       name: this.name.trim(),
-      description: this.description.trim() || undefined
+      description: this.description.trim(),
     };
 
     this.isSaving.set(true);
@@ -39,7 +44,7 @@ export class ProjectCreateComponent {
       next: (project) => {
         this.isSaving.set(false);
         if (project?.id != null) {
-          this.router.navigate(['/projects', project.id]);
+          this.router.navigate(['/projects/', project.id]);
         } else {
           this.router.navigate(['/']);
         }
@@ -47,9 +52,9 @@ export class ProjectCreateComponent {
       error: (error) => {
         this.isSaving.set(false);
         this.errorMessage.set(
-          error?.error?.message || 'Failed to create project. Please try again.'
+          error?.error?.message || 'Failed to create project. Please try again.',
         );
-      }
+      },
     });
   }
 

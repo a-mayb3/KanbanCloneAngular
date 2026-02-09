@@ -15,33 +15,24 @@ export const httpInterceptor: HttpInterceptorFn = (req, next) => {
   // Clone the request to add withCredentials flag
   // This ensures cookies are sent with every request
   const reqWithCredentials = req.clone({
-    withCredentials: true
+    withCredentials: true,
   });
 
   // Pass the cloned request to the next handler
   return next(reqWithCredentials).pipe(
     catchError((error: HttpErrorResponse) => {
-      // Handle different HTTP error codes
       if (error.status === 401) {
-        // Unauthorized - redirect to login (but not for session check endpoint)
-        // Skip redirect for /me endpoint to avoid issues during app initialization
-        if (!req.url.endsWith('/me')) {
-          console.error('Unauthorized access - redirecting to login');
+        if (router.url !== '/login') {
           router.navigate(['/login']);
         }
       } else if (error.status === 403) {
-        // Forbidden
         console.error('Access forbidden:', error.message);
-      } else if (error.status === 0) {
-        // Network error
-        console.error('Network error - check if the server is running');
       } else {
-        // Other errors
         console.error(`HTTP Error ${error.status}:`, error.message);
       }
 
       // Re-throw the error so components can handle it if needed
       return throwError(() => error);
-    })
+    }),
   );
 };

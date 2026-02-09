@@ -17,7 +17,7 @@ export interface ProjectFull {
 
 export interface CreateProjectRequest {
   name: string;
-  description?: string;
+  description: string;
 }
 
 export interface UpdateProjectRequest {

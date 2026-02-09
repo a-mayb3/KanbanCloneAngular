@@ -1,6 +1,6 @@
 import { Injectable, inject, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { LoginRequest, LoginResponse, User, AuthState } from '../models/auth.models';
 import { environment } from '../config/environment';
@@ -36,11 +36,11 @@ export class AuthService {
       credentials
     ).pipe(
       tap(response => {
-        if (response.success && response.user) {
-          // Update auth state
+        if (response.success || response.user) {
+          // Update auth state even if the backend only sets a cookie
           this.authState.set({
             isAuthenticated: true,
-            user: response.user
+            user: response.user ?? null
           });
         }
       })
@@ -52,7 +52,7 @@ export class AuthService {
    * Clears the session cookie on the backend
    */
   logout(): Observable<any> {
-    return this.http.post(`${environment.apiBaseUrl}/me/logout`, {}).pipe(
+    return this.http.get(`${environment.apiBaseUrl}/me/logout`).pipe(
       tap(() => {
         // Clear auth state
         this.authState.set({
@@ -61,6 +61,11 @@ export class AuthService {
         });
         // Redirect to login
         this.router.navigate(['/login']);
+      }),
+      catchError((error) => {
+        // Even if logout fails on backend, clear local state
+        this.clearAuthState();
+        return throwError(() => error);
       })
     );
   }
@@ -88,5 +93,6 @@ export class AuthService {
       isAuthenticated: false,
       user: null
     });
+    this.router.navigate(['/login']);
   }
 }
