@@ -1,7 +1,12 @@
+export interface Task {
+  id: number;
+  title: string;
+  description?: string;
+  status: 'pending' | 'in_progress' | 'completed' | 'stashed' | 'failed';
+}
 
-export interface Task{
-    id: number;
-    title: string;
-    description?: string;
-    status: 'PENDING' | 'IN_PROGRESS' | 'COMPLETED' | 'STASHED' | 'FAILED';
+export interface CreateTaskRequest {
+  title: string;
+  description?: string;
+  status: Task['status'];
 }

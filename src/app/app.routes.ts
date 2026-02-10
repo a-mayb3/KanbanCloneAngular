@@ -6,7 +6,7 @@ export const routes: Routes = [
   // Public routes
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
   },
 
   // Protected routes - require authentication
@@ -16,16 +16,27 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent)
+        loadComponent: () => import('./pages/home/home.component').then((m) => m.HomeComponent),
       },
       {
         path: 'projects/new',
-        loadComponent: () => import('./pages/project-create/project-create.component').then(m => m.ProjectCreateComponent)
+        loadComponent: () =>
+          import('./pages/project-create/project-create.component').then(
+            (m) => m.ProjectCreateComponent,
+          ),
       },
       {
         path: 'projects/:id',
-        loadComponent: () => import('./pages/project-details/project-details.component').then(m => m.ProjectDetailsComponent)
-      }
-    ]
-  }
+        loadComponent: () =>
+          import('./pages/project-details/project-details.component').then(
+            (m) => m.ProjectDetailsComponent,
+          ),
+      },
+      {
+        path: 'projects/:id/tasks/new',
+        loadComponent: () =>
+          import('./pages/task-create/task-create.component').then((m) => m.TaskCreateComponent),
+      },
+    ],
+  },
 ];
