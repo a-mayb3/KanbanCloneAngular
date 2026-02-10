@@ -77,6 +77,28 @@
   -webkit-box-orient: vertical;
 }
 
+.completion-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: .5rem;
+  font-size: 13px;
+  color: #4b5563;
+  width: fit-content;
+}
+
+.completion-label {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.completion-value {
+  font-weight: 700;
+  color: #10b981;
+}
+
 /* Footer */
 .project-footer {
   display: flex;

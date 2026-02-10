@@ -8,10 +8,20 @@ import { Project } from '../../models/projects.models';
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './project-item.component.html',
-  styleUrl: './project-item.component.css'
+  styleUrl: './project-item.component.css',
 })
 export class ProjectItemComponent {
   @Input({ required: true }) project!: Project;
+
+  get completionPercentage(): number | null {
+    const tasks = this.project.tasks ?? [];
+    if (tasks.length === 0) {
+      return null;
+    }
+
+    const completedCount = tasks.filter((task) => task.status === 'completed').length;
+    return Math.round((completedCount / tasks.length) * 100);
+  }
 
   get projectRoute(): Array<string | number> | null {
     const id = this.getProjectId();
