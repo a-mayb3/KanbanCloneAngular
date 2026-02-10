@@ -1,4 +1,8 @@
-<div class="project-item" (click)="onProjectClick()">
+<div
+  class="project-item"
+  [class.is-disabled]="!projectRoute"
+  [routerLink]="projectRoute"
+>
   <div class="project-header">
     <h3 class="project-title">{{ project.name }}</h3>
   </div>

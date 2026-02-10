@@ -20,10 +20,6 @@ export class HomeComponent {
     return this.authService.currentUser()?.projects ?? [];
   }
 
-  onProjectClick(project: Project) {
-    this.router.navigate(['/projects', project.id]);
-  }
-
   onCreateProject() {
     this.router.navigate(['/projects/new']);
   }
