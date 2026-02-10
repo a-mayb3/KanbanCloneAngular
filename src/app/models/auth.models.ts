@@ -2,7 +2,7 @@
  * Authentication-related type definitions
  */
 
-import { Project } from "./projects.models";
+import { Project } from './projects.models';
 
 export interface LoginRequest {
   email: string;
@@ -14,6 +14,18 @@ export interface LoginResponse {
   message?: string;
   user?: User;
   token?: string; // Optional: if you need the JWT on client side
+}
+
+export interface RegisterRequest {
+  name: string;
+  email: string;
+  password: string;
+}
+
+export interface RegisterResponse {
+  success?: boolean;
+  message?: string;
+  user?: User;
 }
 
 export interface User {

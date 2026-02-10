@@ -8,6 +8,11 @@ export const routes: Routes = [
     path: 'login',
     component: LoginComponent,
   },
+  {
+    path: 'register',
+    loadComponent: () =>
+      import('./pages/register/register.component').then((m) => m.RegisterComponent),
+  },
 
   // Protected routes - require authentication
   {
@@ -30,6 +35,18 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/project-details/project-details.component').then(
             (m) => m.ProjectDetailsComponent,
+          ),
+      },
+      {
+        path: 'projects/:id/edit',
+        loadComponent: () =>
+          import('./pages/project-edit/project-edit.component').then((m) => m.ProjectEditComponent),
+      },
+      {
+        path: 'projects/:id/collaborators/new',
+        loadComponent: () =>
+          import('./pages/collaborator-add/collaborator-add.component').then(
+            (m) => m.CollaboratorAddComponent,
           ),
       },
       {
