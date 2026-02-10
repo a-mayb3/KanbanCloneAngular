@@ -1,0 +1,55 @@
+.task-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: #f9fafb;
+}
+
+.task-info h4 {
+  margin: 0 0 6px 0;
+  color: #111827;
+}
+
+.task-info p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.status {
+  align-self: flex-start;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.status-pending {
+  background-color: #fde68a;
+  color: #92400e;
+}
+
+.status-in_progress {
+  background-color: #bfdbfe;
+  color: #1d4ed8;
+}
+
+.status-completed {
+  background-color: #bbf7d0;
+  color: #15803d;
+}
+
+.status-stashed {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+.status-failed {
+  background-color: #fecaca;
+  color: #b91c1c;
+}

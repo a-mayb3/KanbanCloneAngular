@@ -1,0 +1,9 @@
+<article class="task-item">
+  <div class="task-info">
+    <h4>{{ task.title }}</h4>
+    <p>{{ task.description || 'No description.' }}</p>
+  </div>
+  <span class="status" [ngClass]="'status-' + task.status.toLowerCase()">
+    {{ task.status.replace('_', ' ') }}
+  </span>
+</article>
