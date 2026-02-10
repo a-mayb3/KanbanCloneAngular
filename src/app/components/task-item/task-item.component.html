@@ -3,7 +3,20 @@
     <h4>{{ task.title }}</h4>
     <p>{{ task.description || 'No description.' }}</p>
   </div>
-  <span class="status" [ngClass]="'status-' + task.status.toLowerCase()">
-    {{ task.status.replace('_', ' ') }}
-  </span>
+  <div class="task-meta">
+    <label class="status-label" for="status-{{ task.id }}">Status</label>
+    <select
+      id="status-{{ task.id }}"
+      class="status-select"
+      [(ngModel)]="statusValue"
+      (ngModelChange)="onStatusChange($event)"
+    >
+      @for (status of statusOptions; track status) {
+        <option [value]="status">{{ status.replace('_', ' ') }}</option>
+      }
+    </select>
+    <button class="btn-remove" type="button" aria-label="Remove task" (click)="onRemove()">
+      x
+    </button>
+  </div>
 </article>
