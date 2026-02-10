@@ -1,0 +1,239 @@
+.details-container {
+  min-height: 100vh;
+  background-color: #f5f7fa;
+}
+
+.content {
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.btn-back {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  background-color: #e2e8f0;
+  color: #1f2933;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-back:hover {
+  background-color: #cbd5e1;
+}
+
+.title h2 {
+  margin: 0 0 6px 0;
+  font-size: 26px;
+  color: #1f2933;
+}
+
+.title p {
+  margin: 0;
+  color: #6b7280;
+}
+
+.project-card,
+.collaborators-card,
+.tasks-card,
+.danger-zone,
+.loading,
+.error-state,
+.empty-state {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.project-card {
+  margin-bottom: 20px;
+}
+
+.collaborators-card {
+  margin-bottom: 20px;
+}
+
+.danger-zone {
+  margin-top: 20px;
+  border: 1px solid #fee2e2;
+  background: #fff5f5;
+}
+
+.danger-header h3 {
+  margin: 0 0 6px 0;
+  color: #b91c1c;
+}
+
+.danger-header p {
+  margin: 0;
+  color: #7f1d1d;
+}
+
+.danger-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.danger-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid #fecaca;
+}
+
+.danger-item h4 {
+  margin: 0 0 4px 0;
+  color: #7f1d1d;
+  font-size: 16px;
+}
+
+.danger-item p {
+  margin: 0;
+  color: #991b1b;
+  font-size: 13px;
+}
+
+.btn-danger,
+.btn-danger-outline {
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-danger {
+  border: none;
+  background-color: #dc2626;
+  color: #ffffff;
+}
+
+.btn-danger:hover {
+  background-color: #b91c1c;
+}
+
+.btn-danger-outline {
+  border: 1px solid #fca5a5;
+  background-color: #ffffff;
+  color: #b91c1c;
+}
+
+.btn-danger-outline:hover {
+  border-color: #f87171;
+  background-color: #fee2e2;
+}
+
+.project-card h3 {
+  margin: 0 0 12px 0;
+  font-size: 22px;
+  color: #111827;
+}
+
+.description {
+  margin: 0;
+  color: #4b5563;
+}
+
+.tasks-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.collaborators-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.collaborators-count {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.collaborators-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.btn-add-task {
+  width: 100%;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  background-color: #10b981;
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 16px;
+}
+
+.btn-add-collaborator {
+  width: 100%;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  background-color: #10b981;
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 16px;
+}
+
+.btn-add-task:hover {
+  background-color: #059669;
+}
+
+.btn-add-collaborator:hover {
+  background-color: #059669;
+}
+
+.tasks-count {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.tasks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.loading p,
+.error-state p,
+.empty-state p {
+  margin: 0;
+  color: #4b5563;
+}
+
+.error-state p {
+  color: #b91c1c;
+}

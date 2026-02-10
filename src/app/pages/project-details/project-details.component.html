@@ -1,0 +1,86 @@
+<div class="details-container">
+  <main class="content">
+    @if (isLoading()) {
+      <div class="loading">
+        <p>Loading project...</p>
+      </div>
+    } @else if (errorMessage()) {
+      <div class="error-state">
+        <p>{{ errorMessage() }}</p>
+      </div>
+    } @else {
+      <section class="project-card">
+        <h2>{{ project()?.name }}</h2>
+        <h4>Project description:</h4>
+        <p class="description">
+          {{ project()?.description || 'No description available.' }}
+        </p>
+      </section>
+
+      <section class="collaborators-card">
+        <div class="collaborators-header">
+          <h4>Collaborators</h4>
+          <span class="collaborators-count"> {{ project()?.users?.length ?? 0 }} total </span>
+        </div>
+
+        @if ((project()?.users?.length ?? 0) > 0) {
+          <div class="collaborators-grid">
+            @for (user of project()?.users ?? []; track user.id) {
+              <app-collaborator-item [user]="user" (remove)="onRemoveCollaborator($event)" />
+            }
+          </div>
+        } @else {
+          <div class="empty-state">
+            <p>No collaborators yet.</p>
+          </div>
+        }
+
+        <button class="btn-add-collaborator" type="button">Add collaborator</button>
+      </section>
+
+      <section class="tasks-card">
+        <div class="tasks-header">
+          <h4>Tasks</h4>
+          <span class="tasks-count">{{ project()?.tasks?.length ?? 0 }} total</span>
+        </div>
+
+        @if ((project()?.tasks?.length ?? 0) > 0) {
+          <div class="tasks-grid">
+            @for (task of project()?.tasks ?? []; track task.id) {
+              <app-task-item [task]="task" />
+            }
+          </div>
+        } @else {
+          <div class="empty-state">
+            <p>No tasks yet.</p>
+          </div>
+        }
+
+        <button class="btn-add-task" type="button" (click)="onAddTask()">Add task</button>
+      </section>
+
+      <section class="danger-zone">
+        <div class="danger-header">
+          <h3>Danger zone</h3>
+          <p>Actions that affect this project permanently.</p>
+        </div>
+        <div class="danger-actions">
+          <div class="danger-item">
+            <div>
+              <h4>Edit project details</h4>
+              <p>Update the project name or description.</p>
+            </div>
+            <button class="btn-danger-outline" type="button">Edit project</button>
+          </div>
+          <div class="danger-item">
+            <div>
+              <h4>Delete project</h4>
+              <p>This will remove the project and all associated data.</p>
+            </div>
+            <button class="btn-danger" type="button">Delete project</button>
+          </div>
+        </div>
+      </section>
+    }
+  </main>
+</div>
