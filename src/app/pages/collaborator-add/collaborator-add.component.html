@@ -1,0 +1,39 @@
+<div class="collaborator-add">
+  <div class="card">
+    <h1>Add collaborator</h1>
+
+    @if (errorMessage()) {
+      <div class="error">{{ errorMessage() }}</div>
+    }
+
+    <form (ngSubmit)="onSubmit()" #collaboratorForm="ngForm">
+      <div class="form-group">
+        <label for="email">Collaborator e-mail</label>
+        <input
+          id="email"
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="Enter collaborator e-mail"
+          required
+          autocomplete="email"
+        />
+      </div>
+
+      <div class="actions">
+        <button type="button" class="btn-secondary" (click)="onCancel()">Cancel</button>
+        <button
+          type="submit"
+          class="btn-primary"
+          [disabled]="isSaving() || !collaboratorForm.form.valid"
+        >
+          @if (isSaving()) {
+            <span>Adding...</span>
+          } @else {
+            <span>Add collaborator</span>
+          }
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

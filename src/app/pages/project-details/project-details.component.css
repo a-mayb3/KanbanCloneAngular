@@ -1,35 +1,10 @@
-.details-container {
-  min-height: 100vh;
-  background-color: #f5f7fa;
-}
-
 .content {
   padding: 40px;
   max-width: 1200px;
   margin: 0 auto;
-}
-
-.header {
   display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 24px;
-}
-
-.btn-back {
-  padding: 8px 16px;
-  border-radius: 8px;
-  border: none;
-  background-color: #e2e8f0;
-  color: #1f2933;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.btn-back:hover {
-  background-color: #cbd5e1;
+  flex-direction: column;
+  gap: 0.6rem;
 }
 
 .title h2 {
@@ -50,18 +25,27 @@
 .loading,
 .error-state,
 .empty-state {
+  height: fit-content;
   background: #ffffff;
-  padding: 24px;
+  padding: 1rem;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-.project-card {
-  margin-bottom: 20px;
+.project-card h2{
+  margin: 0;
+  padding-top: 0.5rem;
 }
 
-.collaborators-card {
-  margin-bottom: 20px;
+.tasks-header,
+.collaborators-header {
+  padding-top: .5rem;
+  padding-bottom: 1.5rem;
+}
+
+.tasks-header h4,
+.collaborators-header h4 {
+  margin: 0;
 }
 
 .danger-zone {
@@ -144,12 +128,6 @@
   background-color: #fee2e2;
 }
 
-.project-card h3 {
-  margin: 0 0 12px 0;
-  font-size: 22px;
-  color: #111827;
-}
-
 .description {
   margin: 0;
   color: #4b5563;
@@ -160,7 +138,6 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 16px;
 }
 
 .collaborators-header {
@@ -168,7 +145,6 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 16px;
 }
 
 .collaborators-count {
@@ -178,8 +154,12 @@
 
 .collaborators-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
+}
+
+.collaborators-grid--single {
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .btn-add-task {
@@ -221,10 +201,10 @@
   color: #6b7280;
 }
 
-.tasks-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .loading p,

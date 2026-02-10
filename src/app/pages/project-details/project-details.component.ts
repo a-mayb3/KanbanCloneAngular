@@ -6,6 +6,7 @@ import { ProjectFull } from '../../models/projects.models';
 import { CollaboratorItemComponent } from '../../components/collaborator-item/collaborator-item.component';
 import { TaskItemComponent } from '../../components/task-item/task-item.component';
 import { User } from '../../models/auth.models';
+import { Task } from '../../models/tasks.models';
 
 @Component({
   selector: 'app-project-details',
@@ -23,6 +24,16 @@ export class ProjectDetailsComponent {
   project = signal<ProjectFull | null>(null);
   isLoading = signal(true);
   errorMessage = signal('');
+
+  get taskCompletionPercentage(): number {
+    const tasks = this.project()?.tasks ?? [];
+    if (tasks.length === 0) {
+      return 0;
+    }
+
+    const completedCount = tasks.filter((task) => task.status === 'completed').length;
+    return Math.round((completedCount / tasks.length) * 100);
+  }
 
   constructor() {
     const navState = this.router.getCurrentNavigation()?.extras.state ?? (history.state as any);
@@ -104,5 +115,75 @@ export class ProjectDetailsComponent {
     }
 
     this.router.navigate(['/projects', this.projectId, 'tasks', 'new']);
+  }
+
+  onTaskStatusChange(event: {
+    task: Task;
+    status: Task['status'];
+    previousStatus: Task['status'];
+  }) {
+    if (this.projectId == null) {
+      return;
+    }
+
+    this.apiService
+      .put<void>(`/projects/${this.projectId}/tasks/${event.task.id}`, {
+        status: event.status,
+      })
+      .subscribe({
+        error: (error) => {
+          const current = this.project();
+          if (!current) {
+            return;
+          }
+
+          const updatedTasks = (current.tasks ?? []).map((task) =>
+            task.id === event.task.id
+              ? {
+                  ...task,
+                  status: event.previousStatus,
+                }
+              : task,
+          );
+
+          this.project.set({
+            ...current,
+            tasks: updatedTasks,
+          });
+
+          this.errorMessage.set(error?.error?.message || 'Failed to update task status.');
+        },
+      });
+  }
+
+  onAddCollaborator() {
+    if (this.projectId == null) {
+      return;
+    }
+
+    this.router.navigate(['/projects', this.projectId, 'collaborators', 'new']);
+  }
+
+  onDeleteProject() {
+    if (this.projectId == null) {
+      return;
+    }
+
+    this.apiService.delete<void>(`/projects/${this.projectId}`).subscribe({
+      next: () => {
+        this.router.navigate(['/']);
+      },
+      error: (error) => {
+        this.errorMessage.set(error?.error?.message || 'Failed to delete project.');
+      },
+    });
+  }
+
+  onEditProject() {
+    if (this.projectId == null) {
+      return;
+    }
+
+    this.router.navigate(['/projects', this.projectId, 'edit']);
   }
 }
