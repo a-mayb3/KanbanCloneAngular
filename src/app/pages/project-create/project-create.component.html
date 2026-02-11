@@ -2,9 +2,7 @@
   <div class="card">
     <h1>Create project</h1>
 
-    @if (errorMessage()) {
-      <div class="error">{{ errorMessage() }}</div>
-    }
+    <div class="error" *ngIf="errorMessage()">{{ errorMessage() }}</div>
 
     <form (ngSubmit)="onSubmit()" #projectForm="ngForm">
       <div class="form-group">
@@ -38,11 +36,8 @@
           class="btn-primary"
           [disabled]="isSaving() || !projectForm.form.valid"
         >
-          @if (isSaving()) {
-            <span>Creating...</span>
-          } @else {
-            <span>Create project</span>
-          }
+          <span *ngIf="isSaving(); else createText">Creating...</span>
+          <ng-template #createText><span>Create project</span></ng-template>
         </button>
       </div>
     </form>

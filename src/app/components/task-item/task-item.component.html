@@ -11,9 +11,9 @@
       [(ngModel)]="statusValue"
       (ngModelChange)="onStatusChange($event)"
     >
-      @for (status of statusOptions; track status) {
-        <option [value]="status">{{ status.replace('_', ' ').toUpperCase() }}</option>
-      }
+      <option *ngFor="let status of statusOptions; trackBy: trackByStatus" [value]="status">
+        {{ status.replace('_', ' ').toUpperCase() }}
+      </option>
     </select>
     <button class="btn-edit" type="button" aria-label="Edit task" (click)="onEdit()">Edit</button>
     <button class="btn-remove" type="button" aria-label="Remove task" (click)="onRemove()">

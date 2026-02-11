@@ -1,14 +1,20 @@
 <div class="details-container">
   <main class="content">
-    @if (isLoading()) {
+    <ng-container *ngIf="isLoading(); else loadedState">
       <div class="loading">
         <p>Loading project...</p>
       </div>
-    } @else if (errorMessage()) {
-      <div class="error-state">
-        <p>{{ errorMessage() }}</p>
-      </div>
-    } @else {
+    </ng-container>
+
+    <ng-template #loadedState>
+      <ng-container *ngIf="errorMessage(); else contentState">
+        <div class="error-state">
+          <p>{{ errorMessage() }}</p>
+        </div>
+      </ng-container>
+    </ng-template>
+
+    <ng-template #contentState>
       <section class="project-card">
         <h2>{{ project()?.name }}</h2>
         <h4>Project description:</h4>
@@ -26,21 +32,21 @@
             </span>
           </div>
 
-          @if ((project()?.tasks?.length ?? 0) > 0) {
+          <ng-container *ngIf="(project()?.tasks?.length ?? 0) > 0; else emptyTasks">
             <div class="tasks-list">
-              @for (task of project()?.tasks ?? []; track task.id) {
-                <app-task-item
-                  [task]="task"
-                  [projectId]="project()?.id"
-                  (statusChange)="onTaskStatusChange($event)"
-                />
-              }
+              <app-task-item
+                *ngFor="let task of project()?.tasks ?? []; trackBy: trackByTaskId"
+                [task]="task"
+                [projectId]="project()?.id"
+                (statusChange)="onTaskStatusChange($event)"
+              />
             </div>
-          } @else {
+          </ng-container>
+          <ng-template #emptyTasks>
             <div class="empty-state">
               <p>No tasks yet.</p>
             </div>
-          }
+          </ng-template>
 
           <button class="btn-add-task" type="button" (click)="onAddTask()">Add task</button>
         </section>
@@ -51,20 +57,23 @@
             <span class="collaborators-count"> {{ project()?.users?.length ?? 0 }} total </span>
           </div>
 
-          @if ((project()?.users?.length ?? 0) > 0) {
+          <ng-container *ngIf="(project()?.users?.length ?? 0) > 0; else emptyCollaborators">
             <div
               class="collaborators-grid"
               [class.collaborators-grid--single]="(project()?.users?.length ?? 0) === 1"
             >
-              @for (user of project()?.users ?? []; track user.id) {
-                <app-collaborator-item [user]="user" (remove)="onRemoveCollaborator($event)" />
-              }
+              <app-collaborator-item
+                *ngFor="let user of project()?.users ?? []; trackBy: trackByUserId"
+                [user]="user"
+                (remove)="onRemoveCollaborator($event)"
+              />
             </div>
-          } @else {
+          </ng-container>
+          <ng-template #emptyCollaborators>
             <div class="empty-state">
               <p>No collaborators yet.</p>
             </div>
-          }
+          </ng-template>
 
           <button class="btn-add-collaborator" type="button" (click)="onAddCollaborator()">
             Add collaborator
@@ -98,6 +107,6 @@
           </div>
         </div>
       </section>
-    }
+    </ng-template>
   </main>
 </div>

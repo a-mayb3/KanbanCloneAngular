@@ -2,9 +2,7 @@
   <div class="card">
     <h1>Create task</h1>
 
-    @if (errorMessage()) {
-      <div class="error">{{ errorMessage() }}</div>
-    }
+    <div class="error" *ngIf="errorMessage()">{{ errorMessage() }}</div>
 
     <form (ngSubmit)="onSubmit()" #taskForm="ngForm">
       <div class="form-group">
@@ -44,11 +42,8 @@
       <div class="actions">
         <button type="button" class="btn-secondary" (click)="onCancel()">Cancel</button>
         <button type="submit" class="btn-primary" [disabled]="isSaving() || !taskForm.form.valid">
-          @if (isSaving()) {
-            <span>Creating...</span>
-          } @else {
-            <span>Create task</span>
-          }
+          <span *ngIf="isSaving(); else createText">Creating...</span>
+          <ng-template #createText><span>Create task</span></ng-template>
         </button>
       </div>
     </form>

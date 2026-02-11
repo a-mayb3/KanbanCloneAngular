@@ -8,11 +8,14 @@
     </div>
 
     <div class="projects-grid">
-      @if (projectList.length > 0) {
-        @for (project of projectList; track project.id) {
-          <app-project-item [project]="project" />
-        }
-      } @else {
+      <ng-container *ngIf="projectList.length > 0; else noProjects">
+        <app-project-item
+          *ngFor="let project of projectList; trackBy: trackByProjectId"
+          [project]="project"
+        />
+      </ng-container>
+
+      <ng-template #noProjects>
         <div class="no-projects">
           <p>
             You have no projects.
@@ -21,7 +24,7 @@
             </a>
           </p>
         </div>
-      }
+      </ng-template>
     </div>
   </main>
 </div>

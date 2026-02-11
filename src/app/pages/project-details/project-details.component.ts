@@ -186,4 +186,12 @@ export class ProjectDetailsComponent {
 
     this.router.navigate(['/projects', this.projectId, 'edit']);
   }
+
+  trackByTaskId(_index: number, task: Task): number {
+    return task.id;
+  }
+
+  trackByUserId(_index: number, user: User): string | number {
+    return user.id;
+  }
 }

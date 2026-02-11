@@ -2,9 +2,7 @@
   <div class="card">
     <h1>Add collaborator</h1>
 
-    @if (errorMessage()) {
-      <div class="error">{{ errorMessage() }}</div>
-    }
+    <div class="error" *ngIf="errorMessage()">{{ errorMessage() }}</div>
 
     <form (ngSubmit)="onSubmit()" #collaboratorForm="ngForm">
       <div class="form-group">
@@ -27,11 +25,8 @@
           class="btn-primary"
           [disabled]="isSaving() || !collaboratorForm.form.valid"
         >
-          @if (isSaving()) {
-            <span>Adding...</span>
-          } @else {
-            <span>Add collaborator</span>
-          }
+          <span *ngIf="isSaving(); else addText">Adding...</span>
+          <ng-template #addText><span>Add collaborator</span></ng-template>
         </button>
       </div>
     </form>

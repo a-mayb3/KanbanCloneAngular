@@ -1,9 +1,9 @@
 <header class="header">
   <h1><a class="logo-link" routerLink="/">Kanban Board</a></h1>
   <div class="user-info">
-    @if (authService.currentUser()) {
+    <ng-container *ngIf="authService.currentUser()">
       <span class="username">{{ authService.currentUser()?.email }}</span>
       <button class="btn-logout" (click)="logout()">Logout</button>
-    }
+    </ng-container>
   </div>
 </header>

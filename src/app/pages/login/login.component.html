@@ -3,11 +3,9 @@
     <h1>{{ 'KanbanCloneAngular' }}</h1>
     <h2>Sign In</h2>
 
-    @if (errorMessage()) {
-      <div class="error-message">
-        {{ errorMessage() }}
-      </div>
-    }
+    <div class="error-message" *ngIf="errorMessage()">
+      {{ errorMessage() }}
+    </div>
 
     <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
       <div class="form-group">
@@ -37,11 +35,8 @@
       </div>
 
       <button type="submit" class="btn-primary" [disabled]="isLoading() || !loginForm.form.valid">
-        @if (isLoading()) {
-          <span>Logging in...</span>
-        } @else {
-          <span>Login</span>
-        }
+        <span *ngIf="isLoading(); else loginText">Logging in...</span>
+        <ng-template #loginText><span>Login</span></ng-template>
       </button>
     </form>
 

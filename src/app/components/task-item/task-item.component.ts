@@ -45,6 +45,10 @@ export class TaskItemComponent {
     'failed',
   ];
 
+  trackByStatus(_index: number, status: Task['status']): Task['status'] {
+    return status;
+  }
+
   onStatusChange(value: Task['status']) {
     const previousStatus = this.statusValue;
     const nextStatus = value;

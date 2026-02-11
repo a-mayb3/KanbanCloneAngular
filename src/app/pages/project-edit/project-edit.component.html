@@ -2,13 +2,13 @@
   <div class="card">
     <h1>Edit project</h1>
 
-    @if (errorMessage()) {
-      <div class="error">{{ errorMessage() }}</div>
-    }
+    <div class="error" *ngIf="errorMessage()">{{ errorMessage() }}</div>
 
-    @if (isLoading()) {
+    <ng-container *ngIf="isLoading(); else formContent">
       <p class="loading">Loading project...</p>
-    } @else {
+    </ng-container>
+
+    <ng-template #formContent>
       <form (ngSubmit)="onSubmit()" #projectForm="ngForm">
         <div class="form-group">
           <label for="name">Project name</label>
@@ -41,14 +41,11 @@
             class="btn-primary"
             [disabled]="isSaving() || !projectForm.form.valid"
           >
-            @if (isSaving()) {
-              <span>Saving...</span>
-            } @else {
-              <span>Save changes</span>
-            }
+            <span *ngIf="isSaving(); else saveText">Saving...</span>
+            <ng-template #saveText><span>Save changes</span></ng-template>
           </button>
         </div>
       </form>
-    }
+    </ng-template>
   </div>
 </div>

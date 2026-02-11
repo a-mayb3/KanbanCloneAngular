@@ -3,14 +3,12 @@
     <h3 class="project-title">{{ project.name }}</h3>
   </div>
 
-  @if (project.description) {
-    <p class="project-description">{{ project.description }}</p>
-  }
+  <p class="project-description" *ngIf="project.description">
+    {{ project.description }}
+  </p>
 
-  @if (completionPercentage != null) {
-    <div class="completion-row">
-      <span class="completion-label">Completion</span>
-      <span class="completion-value">{{ completionPercentage }}%</span>
-    </div>
-  }
+  <div class="completion-row" *ngIf="completionPercentage != null">
+    <span class="completion-label">Completion</span>
+    <span class="completion-value">{{ completionPercentage }}%</span>
+  </div>
 </div>

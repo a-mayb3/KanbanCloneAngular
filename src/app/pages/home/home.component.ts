@@ -10,7 +10,7 @@ import { Project } from '../../models/projects.models';
   standalone: true,
   imports: [CommonModule, ProjectItemComponent],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.css',
 })
 export class HomeComponent {
   protected authService = inject(AuthService);
@@ -22,5 +22,9 @@ export class HomeComponent {
 
   onCreateProject() {
     this.router.navigate(['/projects/new']);
+  }
+
+  trackByProjectId(_index: number, project: Project): number {
+    return project.id;
   }
 }
