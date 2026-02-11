@@ -17,58 +17,60 @@
         </p>
       </section>
 
-      <section class="tasks-card">
-        <div class="tasks-header">
-          <h4>Tasks</h4>
-          <span class="tasks-count">
-            {{ project()?.tasks?.length ?? 0 }} total • {{ taskCompletionPercentage }}% completed
-          </span>
-        </div>
-
-        @if ((project()?.tasks?.length ?? 0) > 0) {
-          <div class="tasks-list">
-            @for (task of project()?.tasks ?? []; track task.id) {
-              <app-task-item
-                [task]="task"
-                [projectId]="project()?.id"
-                (statusChange)="onTaskStatusChange($event)"
-              />
-            }
+      <div class="cards-row">
+        <section class="tasks-card">
+          <div class="tasks-header">
+            <h4>Tasks</h4>
+            <span class="tasks-count">
+              {{ project()?.tasks?.length ?? 0 }} total • {{ taskCompletionPercentage }}% completed
+            </span>
           </div>
-        } @else {
-          <div class="empty-state">
-            <p>No tasks yet.</p>
+
+          @if ((project()?.tasks?.length ?? 0) > 0) {
+            <div class="tasks-list">
+              @for (task of project()?.tasks ?? []; track task.id) {
+                <app-task-item
+                  [task]="task"
+                  [projectId]="project()?.id"
+                  (statusChange)="onTaskStatusChange($event)"
+                />
+              }
+            </div>
+          } @else {
+            <div class="empty-state">
+              <p>No tasks yet.</p>
+            </div>
+          }
+
+          <button class="btn-add-task" type="button" (click)="onAddTask()">Add task</button>
+        </section>
+
+        <section class="collaborators-card">
+          <div class="collaborators-header">
+            <h4>Collaborators</h4>
+            <span class="collaborators-count"> {{ project()?.users?.length ?? 0 }} total </span>
           </div>
-        }
 
-        <button class="btn-add-task" type="button" (click)="onAddTask()">Add task</button>
-      </section>
+          @if ((project()?.users?.length ?? 0) > 0) {
+            <div
+              class="collaborators-grid"
+              [class.collaborators-grid--single]="(project()?.users?.length ?? 0) === 1"
+            >
+              @for (user of project()?.users ?? []; track user.id) {
+                <app-collaborator-item [user]="user" (remove)="onRemoveCollaborator($event)" />
+              }
+            </div>
+          } @else {
+            <div class="empty-state">
+              <p>No collaborators yet.</p>
+            </div>
+          }
 
-      <section class="collaborators-card">
-        <div class="collaborators-header">
-          <h4>Collaborators</h4>
-          <span class="collaborators-count"> {{ project()?.users?.length ?? 0 }} total </span>
-        </div>
-
-        @if ((project()?.users?.length ?? 0) > 0) {
-          <div
-            class="collaborators-grid"
-            [class.collaborators-grid--single]="(project()?.users?.length ?? 0) === 1"
-          >
-            @for (user of project()?.users ?? []; track user.id) {
-              <app-collaborator-item [user]="user" (remove)="onRemoveCollaborator($event)" />
-            }
-          </div>
-        } @else {
-          <div class="empty-state">
-            <p>No collaborators yet.</p>
-          </div>
-        }
-
-        <button class="btn-add-collaborator" type="button" (click)="onAddCollaborator()">
-          Add collaborator
-        </button>
-      </section>
+          <button class="btn-add-collaborator" type="button" (click)="onAddCollaborator()">
+            Add collaborator
+          </button>
+        </section>
+      </div>
 
       <section class="danger-zone">
         <div class="danger-header">
