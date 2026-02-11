@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Task } from '../../models/tasks.models';
@@ -11,6 +12,7 @@ import { Task } from '../../models/tasks.models';
   styleUrl: './task-item.component.css',
 })
 export class TaskItemComponent {
+  private router = inject(Router);
   private _task!: Task;
   statusValue: Task['status'] = 'pending';
 
@@ -23,6 +25,9 @@ export class TaskItemComponent {
   get task(): Task {
     return this._task;
   }
+
+  @Input()
+  projectId?: number;
 
   @Output() statusChange = new EventEmitter<{
     task: Task;
@@ -58,5 +63,15 @@ export class TaskItemComponent {
     if (this._task) {
       this.remove.emit(this._task);
     }
+  }
+
+  onEdit() {
+    if (!this._task || this.projectId == null) {
+      return;
+    }
+
+    this.router.navigate(['/projects', this.projectId, 'tasks', this._task.id, 'edit'], {
+      state: { task: this._task },
+    });
   }
 }

@@ -54,6 +54,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/task-create/task-create.component').then((m) => m.TaskCreateComponent),
       },
+      {
+        path: 'projects/:id/tasks/:taskId/edit',
+        loadComponent: () =>
+          import('./pages/task-edit/task-edit.component').then((m) => m.TaskEditComponent),
+      },
     ],
   },
 ];

@@ -15,6 +15,7 @@
         <option [value]="status">{{ status.replace('_', ' ') }}</option>
       }
     </select>
+    <button class="btn-edit" type="button" aria-label="Edit task" (click)="onEdit()">Edit</button>
     <button class="btn-remove" type="button" aria-label="Remove task" (click)="onRemove()">
       x
     </button>

@@ -10,3 +10,9 @@ export interface CreateTaskRequest {
   description?: string;
   status: Task['status'];
 }
+
+export interface UpdateTaskRequest {
+  title: string;
+  description?: string;
+  status: Task['status'];
+}

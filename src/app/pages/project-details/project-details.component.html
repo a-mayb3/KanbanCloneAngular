@@ -28,7 +28,11 @@
         @if ((project()?.tasks?.length ?? 0) > 0) {
           <div class="tasks-list">
             @for (task of project()?.tasks ?? []; track task.id) {
-              <app-task-item [task]="task" (statusChange)="onTaskStatusChange($event)" />
+              <app-task-item
+                [task]="task"
+                [projectId]="project()?.id"
+                (statusChange)="onTaskStatusChange($event)"
+              />
             }
           </div>
         } @else {
