@@ -1,12 +1,34 @@
 .footer {
-  padding: 24px 16px;
+  padding: 1.5rem 1rem;
   text-align: center;
-  color: #6b7280;
-  background-color: #f5f7fa;
-  border-top: 1px solid #e5e7eb;
+  color: var(--text-color);
+  background-color: var(--secondary-color);
+  border-top: 0.0625rem solid var(--shadow-color);
 }
 
 .footer p {
   margin: 0;
-  font-size: 14px;
+  font-size: 0.875rem;
+}
+
+/* Mobile Responsive */
+@media (max-width: 48rem) {
+  .footer {
+    padding: 1.25rem 1rem;
+    font-size: 0.8125rem;
+  }
+
+  .footer p {
+    font-size: 0.8125rem;
+  }
+}
+
+@media (max-width: 30rem) {
+  .footer {
+    padding: 1rem 0.75rem;
+  }
+
+  .footer p {
+    font-size: 0.75rem;
+  }
 }
