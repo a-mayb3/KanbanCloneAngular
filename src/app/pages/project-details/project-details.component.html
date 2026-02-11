@@ -1,0 +1,112 @@
+<div class="details-container">
+  <main class="content">
+    <ng-container *ngIf="isLoading(); else loadedState">
+      <div class="loading">
+        <p>Loading project...</p>
+      </div>
+    </ng-container>
+
+    <ng-template #loadedState>
+      <ng-container *ngIf="errorMessage(); else contentState">
+        <div class="error-state">
+          <p>{{ errorMessage() }}</p>
+        </div>
+      </ng-container>
+    </ng-template>
+
+    <ng-template #contentState>
+      <section class="project-card">
+        <h2>{{ project()?.name }}</h2>
+        <h4>Project description:</h4>
+        <p class="description">
+          {{ project()?.description || 'No description available.' }}
+        </p>
+      </section>
+
+      <div class="cards-row">
+        <section class="tasks-card">
+          <div class="tasks-header">
+            <h4>Tasks</h4>
+            <span class="tasks-count">
+              {{ project()?.tasks?.length ?? 0 }} total • {{ taskCompletionPercentage }}% completed
+            </span>
+          </div>
+
+          <ng-container *ngIf="(project()?.tasks?.length ?? 0) > 0; else emptyTasks">
+            <div class="tasks-list">
+              <app-task-item
+                *ngFor="let task of project()?.tasks ?? []; trackBy: trackByTaskId"
+                [task]="task"
+                [projectId]="project()?.id"
+                (statusChange)="onTaskStatusChange($event)"
+              />
+            </div>
+          </ng-container>
+          <ng-template #emptyTasks>
+            <div class="empty-state">
+              <p>No tasks yet.</p>
+            </div>
+          </ng-template>
+
+          <button class="btn-add-task" type="button" (click)="onAddTask()">Add task</button>
+        </section>
+
+        <section class="collaborators-card">
+          <div class="collaborators-header">
+            <h4>Collaborators</h4>
+            <span class="collaborators-count"> {{ project()?.users?.length ?? 0 }} total </span>
+          </div>
+
+          <ng-container *ngIf="(project()?.users?.length ?? 0) > 0; else emptyCollaborators">
+            <div
+              class="collaborators-grid"
+              [class.collaborators-grid--single]="(project()?.users?.length ?? 0) === 1"
+            >
+              <app-collaborator-item
+                *ngFor="let user of project()?.users ?? []; trackBy: trackByUserId"
+                [user]="user"
+                (remove)="onRemoveCollaborator($event)"
+              />
+            </div>
+          </ng-container>
+          <ng-template #emptyCollaborators>
+            <div class="empty-state">
+              <p>No collaborators yet.</p>
+            </div>
+          </ng-template>
+
+          <button class="btn-add-collaborator" type="button" (click)="onAddCollaborator()">
+            Add collaborator
+          </button>
+        </section>
+      </div>
+
+      <section class="danger-zone">
+        <div class="danger-header">
+          <h3>Danger zone</h3>
+          <p>Actions that affect this project permanently.</p>
+        </div>
+        <div class="danger-actions">
+          <div class="danger-item">
+            <div>
+              <h4>Edit project details</h4>
+              <p>Update the project name or description.</p>
+            </div>
+            <button class="btn-danger-outline" type="button" (click)="onEditProject()">
+              Edit project
+            </button>
+          </div>
+          <div class="danger-item">
+            <div>
+              <h4>Delete project</h4>
+              <p>This will remove the project and all associated data.</p>
+            </div>
+            <button class="btn-danger" type="button" (click)="onDeleteProject()">
+              Delete project
+            </button>
+          </div>
+        </div>
+      </section>
+    </ng-template>
+  </main>
+</div>

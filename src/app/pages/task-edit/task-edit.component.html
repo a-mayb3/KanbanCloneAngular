@@ -1,0 +1,57 @@
+<div class="create-task">
+  <div class="card">
+    <h1>Edit task</h1>
+
+    <div class="error" *ngIf="errorMessage()">{{ errorMessage() }}</div>
+
+    <ng-container *ngIf="isLoading(); else formContent">
+      <div class="loading">Loading task...</div>
+    </ng-container>
+
+    <ng-template #formContent>
+      <form (ngSubmit)="onSubmit()" #taskForm="ngForm">
+        <div class="form-group">
+          <label for="title">Task title</label>
+          <input
+            id="title"
+            type="text"
+            name="title"
+            [(ngModel)]="title"
+            placeholder="Enter a task title"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            name="description"
+            [(ngModel)]="description"
+            rows="4"
+            placeholder="Enter a task description"
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="status">Status</label>
+          <select id="status" name="status" [(ngModel)]="status" required>
+            <option value="pending">Pending</option>
+            <option value="in_progress">In progress</option>
+            <option value="completed">Completed</option>
+            <option value="stashed">Stashed</option>
+            <option value="failed">Failed</option>
+          </select>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn-secondary" (click)="onCancel()">Cancel</button>
+          <button type="submit" class="btn-primary" [disabled]="isSaving() || !taskForm.form.valid">
+            <span *ngIf="isSaving(); else saveText">Saving...</span>
+            <ng-template #saveText><span>Save changes</span></ng-template>
+          </button>
+        </div>
+      </form>
+    </ng-template>
+  </div>
+</div>

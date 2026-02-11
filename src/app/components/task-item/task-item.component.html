@@ -1,0 +1,23 @@
+<article class="task-item">
+  <div class="task-info">
+    <h4>{{ task.title }}</h4>
+    <p>{{ task.description || 'No description.' }}</p>
+  </div>
+  <div class="task-meta">
+    <label class="status-label" for="status-{{ task.id }}">Status</label>
+    <select
+      id="status-{{ task.id }}"
+      class="status-select"
+      [(ngModel)]="statusValue"
+      (ngModelChange)="onStatusChange($event)"
+    >
+      <option *ngFor="let status of statusOptions; trackBy: trackByStatus" [value]="status">
+        {{ status.replace('_', ' ').toUpperCase() }}
+      </option>
+    </select>
+    <button class="btn-edit" type="button" aria-label="Edit task" (click)="onEdit()">Edit</button>
+    <button class="btn-remove" type="button" aria-label="Remove task" (click)="onRemove()">
+      x
+    </button>
+  </div>
+</article>

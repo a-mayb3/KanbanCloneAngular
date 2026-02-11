@@ -1,0 +1,14 @@
+<div class="project-item" [class.is-disabled]="!projectRoute" [routerLink]="projectRoute">
+  <div class="project-header">
+    <h3 class="project-title">{{ project.name }}</h3>
+  </div>
+
+  <p class="project-description" *ngIf="project.description">
+    {{ project.description }}
+  </p>
+
+  <div class="completion-row" *ngIf="completionPercentage != null">
+    <span class="completion-label">Completion</span>
+    <span class="completion-value">{{ completionPercentage }}%</span>
+  </div>
+</div>

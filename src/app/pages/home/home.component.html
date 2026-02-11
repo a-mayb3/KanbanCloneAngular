@@ -1,0 +1,30 @@
+<div class="home-container">
+  <main class="content">
+    <div class="welcome-message">
+      <div class="welcome-header">
+        <h2>Welcome, {{ authService.currentUser()?.name }}! 👋</h2>
+        <button class="btn-create" (click)="onCreateProject()">Create project</button>
+      </div>
+    </div>
+
+    <div class="projects-grid">
+      <ng-container *ngIf="projects.length > 0; else noProjects">
+        <app-project-item
+          *ngFor="let project of projects; trackBy: trackByProjectId"
+          [project]="project"
+        />
+      </ng-container>
+
+      <ng-template #noProjects>
+        <div class="no-projects">
+          <p>
+            You have no projects.
+            <a class="create-link" href="#" (click)="onCreateProject(); $event.preventDefault()">
+              Create one now
+            </a>
+          </p>
+        </div>
+      </ng-template>
+    </div>
+  </main>
+</div>

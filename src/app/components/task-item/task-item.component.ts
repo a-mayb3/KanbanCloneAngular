@@ -1,0 +1,81 @@
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Task } from '../../models/tasks.models';
+
+@Component({
+  selector: 'app-task-item',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './task-item.component.html',
+  styleUrl: './task-item.component.css',
+})
+export class TaskItemComponent {
+  private router = inject(Router);
+  private _task!: Task;
+  statusValue: Task['status'] = 'pending';
+
+  @Input({ required: true })
+  set task(value: Task) {
+    this._task = value;
+    this.statusValue = value?.status ?? 'pending';
+  }
+
+  get task(): Task {
+    return this._task;
+  }
+
+  @Input()
+  projectId?: number;
+
+  @Output() statusChange = new EventEmitter<{
+    task: Task;
+    status: Task['status'];
+    previousStatus: Task['status'];
+  }>();
+
+  @Output() remove = new EventEmitter<Task>();
+
+  readonly statusOptions: Task['status'][] = [
+    'pending',
+    'in_progress',
+    'completed',
+    'stashed',
+    'failed',
+  ];
+
+  trackByStatus(_index: number, status: Task['status']): Task['status'] {
+    return status;
+  }
+
+  onStatusChange(value: Task['status']) {
+    const previousStatus = this.statusValue;
+    const nextStatus = value;
+    this.statusValue = nextStatus;
+    if (this._task) {
+      this._task.status = nextStatus;
+      this.statusChange.emit({
+        task: this._task,
+        status: nextStatus,
+        previousStatus,
+      });
+    }
+  }
+
+  onRemove() {
+    if (this._task) {
+      this.remove.emit(this._task);
+    }
+  }
+
+  onEdit() {
+    if (!this._task || this.projectId == null) {
+      return;
+    }
+
+    this.router.navigate(['/projects', this.projectId, 'tasks', this._task.id, 'edit'], {
+      state: { task: this._task },
+    });
+  }
+}

@@ -1,0 +1,45 @@
+<div class="create-project">
+  <div class="card">
+    <h1>Create project</h1>
+
+    <div class="error" *ngIf="errorMessage()">{{ errorMessage() }}</div>
+
+    <form (ngSubmit)="onSubmit()" #projectForm="ngForm">
+      <div class="form-group">
+        <label for="name">Project name</label>
+        <input
+          id="name"
+          type="text"
+          name="name"
+          [(ngModel)]="name"
+          placeholder="Enter a project name"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          name="description"
+          [(ngModel)]="description"
+          rows="4"
+          placeholder="Enter a project description"
+          required
+        ></textarea>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="btn-secondary" (click)="onCancel()">Cancel</button>
+        <button
+          type="submit"
+          class="btn-primary"
+          [disabled]="isSaving() || !projectForm.form.valid"
+        >
+          <span *ngIf="isSaving(); else createText">Creating...</span>
+          <ng-template #createText><span>Create project</span></ng-template>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
