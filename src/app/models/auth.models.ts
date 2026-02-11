@@ -12,8 +12,11 @@ export interface LoginRequest {
 export interface LoginResponse {
   success: boolean;
   message?: string;
-  user?: User;
-  token?: string; // Optional: if you need the JWT on client side
+  user?: LoginUserResponse;
+}
+
+export interface LoginUserResponse {
+  id: number;
 }
 
 export interface RegisterRequest {

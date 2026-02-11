@@ -8,9 +8,9 @@
     </div>
 
     <div class="projects-grid">
-      <ng-container *ngIf="projectList.length > 0; else noProjects">
+      <ng-container *ngIf="projects.length > 0; else noProjects">
         <app-project-item
-          *ngFor="let project of projectList; trackBy: trackByProjectId"
+          *ngFor="let project of projects; trackBy: trackByProjectId"
           [project]="project"
         />
       </ng-container>

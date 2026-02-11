@@ -67,7 +67,6 @@ export class LoginComponent implements OnInit {
         next: (response) => {
           this.isLoading.set(false);
           if (response.success || response.user) {
-            // Redirect to home/dashboard after successful login
             this.router.navigate(['/']);
           } else {
             this.errorMessage.set(response.message || 'Login failed');

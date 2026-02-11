@@ -62,7 +62,8 @@
 }
 
 .loading,
-.error-state {
+.error-state,
+.loading-state {
   background: white;
   padding: 30px 24px;
   border-radius: 12px;

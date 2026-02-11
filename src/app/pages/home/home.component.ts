@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -12,12 +12,14 @@ import { Project } from '../../models/projects.models';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   protected authService = inject(AuthService);
   private router = inject(Router);
 
-  protected get projectList(): Project[] {
-    return this.authService.currentUser()?.projects ?? [];
+  protected projects: Project[] = [];
+  
+  ngOnInit(): void {
+    this.projects = this.authService.currentUser()?.projects ?? [];
   }
 
   onCreateProject() {
@@ -27,4 +29,5 @@ export class HomeComponent {
   trackByProjectId(_index: number, project: Project): number {
     return project.id;
   }
+  
 }

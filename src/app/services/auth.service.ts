@@ -10,7 +10,7 @@ import { environment } from '../config/environment';
  * Uses signals for reactive state management
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private http = inject(HttpClient);
@@ -19,7 +19,7 @@ export class AuthService {
   // Reactive auth state using signals
   private authState = signal<AuthState>({
     isAuthenticated: false,
-    user: null
+    user: null,
   });
 
   // Public computed signals for components to consume
@@ -31,19 +31,21 @@ export class AuthService {
    * The JWT will be set as an HTTP-only cookie by the backend
    */
   login(credentials: LoginRequest): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(
-      `${environment.apiBaseUrl}/auth/login`,
-      credentials
-    ).pipe(
-      tap(response => {
+    return this.http.post<LoginResponse>(`${environment.apiBaseUrl}/auth/login`, credentials).pipe(
+      tap((response) => {
         if (response.success || response.user) {
-          // Update auth state even if the backend only sets a cookie
-          this.authState.set({
-            isAuthenticated: true,
-            user: response.user ?? null
-          });
+          this.http.get<User>(`${environment.apiBaseUrl}/me`).subscribe({
+            next: (user) => {
+              this.authState.set({ isAuthenticated: true, user });
+              // Redirect to home/dashboard after successful login
+              this.router.navigate(['/']);
+            },
+            error: () => {
+              this.authState.set({ isAuthenticated: false, user: null });
+            },
+          })
         }
-      })
+      }),
     );
   }
 
@@ -57,7 +59,7 @@ export class AuthService {
         // Clear auth state
         this.authState.set({
           isAuthenticated: false,
-          user: null
+          user: null,
         });
         // Redirect to login
         this.router.navigate(['/login']);
@@ -66,7 +68,7 @@ export class AuthService {
         // Even if logout fails on backend, clear local state
         this.clearAuthState();
         return throwError(() => error);
-      })
+      }),
     );
   }
 
@@ -76,12 +78,12 @@ export class AuthService {
    */
   checkSession(): Observable<User> {
     return this.http.get<User>(`${environment.apiBaseUrl}/me`).pipe(
-      tap(user => {
+      tap((user) => {
         this.authState.set({
           isAuthenticated: true,
-          user: user
+          user: user,
         });
-      })
+      }),
     );
   }
 
@@ -91,7 +93,7 @@ export class AuthService {
   clearAuthState(): void {
     this.authState.set({
       isAuthenticated: false,
-      user: null
+      user: null,
     });
     this.router.navigate(['/login']);
   }
